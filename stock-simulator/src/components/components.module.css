@@ -1,3 +1,11 @@
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: 700;
+}
+
 .header {
   margin: 0px 4px;
 }
@@ -24,8 +32,4 @@
 
 .header6 {
   font-size: 16px;
-}
-
-.italicHeader {
-  font-style: italic;
 }
