@@ -1,6 +1,9 @@
-"use client"
+"use client";
+import { BulletedList } from "@/components/bulletedList";
+import { Paragraph } from "@/components/paragraph";
 import { useStockInfo } from "@/hooks/getStockInfo";
 import { useEffect, useState } from "react";
+import styles from "./home.module.css";
 
 interface stockInterface {
   currentBalance: Number;
@@ -8,16 +11,33 @@ interface stockInterface {
 }
 
 export default function Home() {
-
   // CLIENT SIDE LOCALSTORAGE
-  const [stockInfo, setStockInfo] = useState<stockInterface | null>(null)
+  const [stockInfo, setStockInfo] = useState<stockInterface | null>(null);
   useEffect(() => {
-    setStockInfo(useStockInfo())
-  }, [])
+    setStockInfo(useStockInfo());
+  }, []);
+
+  const listOfStocks = stockInfo
+    ? Object.entries(stockInfo.stocks).map(([k, v]) => `${k} (${v})`)
+    : [];
 
   return (
-    <div>
-      {stockInfo ? stockInfo?.currentBalance.toString() : "Loading"}
+    <div className={styles.stockListContainer}>
+      <div className={styles.stockList}>
+        {stockInfo ? (
+          <BulletedList
+            title="Currently Owned Stocks"
+            list={
+              listOfStocks.length > 0
+                ? listOfStocks
+                : ["No Stocks Currently Owned!"]
+            }
+            size="md"
+          />
+        ) : (
+          <Paragraph size="lg">Loading...</Paragraph>
+        )}
+      </div>
     </div>
   );
 }
