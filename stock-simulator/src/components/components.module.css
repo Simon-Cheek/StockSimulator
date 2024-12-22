@@ -33,3 +33,19 @@
 .header6 {
   font-size: 16px;
 }
+
+.button {
+  padding: 8px 32px;
+  border-radius: 14px;
+  border: none;
+  background-color: #7fbffa;
+  color: #1e1e1e;
+  box-shadow: 1px 1px 4px #99a9ff3a;
+  transition: background-color 0.15s, transform 0.15s;
+}
+
+.button:hover {
+  background-color: #94d0ff;
+  cursor: pointer;
+  transform: scale(1.03);
+}
