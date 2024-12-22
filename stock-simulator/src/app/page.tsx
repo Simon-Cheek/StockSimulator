@@ -5,6 +5,7 @@ import { useStockInfo } from "@/hooks/getStockInfo";
 import { useEffect, useState } from "react";
 import styles from "./home.module.css";
 import { Button } from "@/components/button";
+import { Separator } from "@/components/separator";
 
 interface stockInterface {
   currentBalance: Number;
@@ -26,6 +27,8 @@ export default function Home() {
     <>
       <div className={styles.buyStockContainer}>
         <Button>Buy Stock</Button>
+        <Separator vertical size="xs" />
+        <Button>Sell Stock</Button>
       </div>
       <div className={styles.stockListContainer}>
         <div className={styles.stockList}>

@@ -37,15 +37,30 @@
 .button {
   padding: 8px 32px;
   border-radius: 14px;
-  border: none;
+  border: 2px solid #00000000;
+  font-weight: 600;
   background-color: #7fbffa;
-  color: #1e1e1e;
+  color: #2a2a3a;
+  margin: 0px 4px;
   box-shadow: 1px 1px 4px #99a9ff3a;
-  transition: background-color 0.15s, transform 0.15s;
+  transition: background-color 0.1s ease-in, transform 0.1s ease-in;
 }
 
 .button:hover {
   background-color: #94d0ff;
   cursor: pointer;
+  transform: scale(1.03);
+}
+
+.hollowButton {
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid #7fbffa;
+  color: #7fbffa;
+  transition: border-color 0.1s ease-in, transform 0.1s ease-in;
+}
+
+.hollowButton:hover {
+  border-color: #94d0ff;
+  background-color: #94d0ff12;
   transform: scale(1.03);
 }
