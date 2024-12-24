@@ -7,9 +7,17 @@ type SpanProps = {
   bold?: boolean;
   color?: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
+  style?: React.CSSProperties;
 };
 
-export function Paragraph({ children, italic, color, bold, size }: SpanProps) {
+export function Paragraph({
+  children,
+  italic,
+  color,
+  bold,
+  size,
+  style,
+}: SpanProps) {
   let fontSize = "16px";
   switch (size) {
     case "xs":
@@ -37,7 +45,7 @@ export function Paragraph({ children, italic, color, bold, size }: SpanProps) {
         { [styles.italic]: italic },
         { [styles.bold]: bold }
       )}
-      style={{ color: color, fontSize: fontSize }}
+      style={{ color: color, fontSize: fontSize, ...style }}
     >
       {children}
     </p>
