@@ -1,15 +1,21 @@
+import { useEffect, useState } from "react";
+
 interface stockInfo {
-  currentBalance: Number;
-  stocks: Record<string, Number>;
+  currentBalance: number;
+  stocks: Record<string, number>;
 }
 
-export const useStockInfo = (): stockInfo => {
-  let info = localStorage.getItem('stockSimulatorUser');
-  if (info) return JSON.parse(info);
-  const newStockInfo = {
-    currentBalance: 100000.00,
-    stocks: {}
-  }
-  localStorage.setItem('stockSimulatorUser', JSON.stringify(newStockInfo))
-  return newStockInfo;
-}
+export const useStockInfo = (): stockInfo | null => {
+  const [stockInfo, setStockInfo] = useState<stockInfo | null>(null);
+  useEffect(() => {
+    const info = localStorage.getItem("stockSimulatorUser");
+    if (info) setStockInfo(JSON.parse(info));
+    const newStockInfo = {
+      currentBalance: 100000.0,
+      stocks: {},
+    };
+    localStorage.setItem("stockSimulatorUser", JSON.stringify(newStockInfo));
+    setStockInfo(newStockInfo);
+  }, []);
+  return stockInfo;
+};

@@ -5,7 +5,7 @@ type ListProp = {
   list: string[];
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   title?: string;
-  style?: any;
+  style?: React.CSSProperties;
 };
 
 export function BulletedList({ list, size = "md", title, style }: ListProp) {

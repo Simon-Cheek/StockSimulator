@@ -5,7 +5,7 @@ type HeaderProps = {
   children: React.ReactNode;
   italic?: boolean;
   color?: string;
-  style?: any;
+  style?: React.CSSProperties;
 };
 
 export function H1({ children, italic, color, style }: HeaderProps) {

@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import dotenv from "dotenv";
 
-require("dotenv").config();
+dotenv.config();
 
 export async function GET(
   req: NextRequest,
-  context: { params: { name: string } }
+  { params }: { params: Promise<{ name: string }> }
 ) {
-  console.log("Incoming request");
-  const params = await context.params;
-  const name = params.name;
+  const name = (await params).name;
 
   if (!name || !name.match(/^[A-Za-z]+$/)) {
     return NextResponse.json(
@@ -39,7 +38,7 @@ export async function GET(
     } else {
       return errorResponse;
     }
-  } catch (e) {
+  } catch {
     return errorResponse;
   }
 }
