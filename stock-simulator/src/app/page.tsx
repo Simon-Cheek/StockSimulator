@@ -2,22 +2,13 @@
 import { BulletedList } from "@/components/bulletedList";
 import { Paragraph } from "@/components/paragraph";
 import { useStockInfo } from "@/hooks/getStockInfo";
-import { useEffect, useState } from "react";
 import styles from "./home.module.css";
 import { Button } from "@/components/button";
 import { Separator } from "@/components/separator";
 
-interface stockInterface {
-  currentBalance: Number;
-  stocks: Record<string, Number>;
-}
-
 export default function Home() {
   // CLIENT SIDE LOCALSTORAGE
-  const [stockInfo, setStockInfo] = useState<stockInterface | null>(null);
-  useEffect(() => {
-    setStockInfo(useStockInfo());
-  }, []);
+  const stockInfo = useStockInfo();
 
   const listOfStocks = stockInfo
     ? Object.entries(stockInfo.stocks).map(([k, v]) => `${k} (${v})`)

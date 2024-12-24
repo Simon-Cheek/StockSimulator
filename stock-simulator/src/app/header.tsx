@@ -5,20 +5,11 @@ import { H1, H3 } from "../components/headers";
 import styles from "./home.module.css";
 import { Span } from "@/components/span";
 import { Separator } from "@/components/separator";
-import { useEffect, useState } from "react";
 import { useStockInfo } from "@/hooks/getStockInfo";
 
 export default function Header() {
-  interface stockInterface {
-    currentBalance: Number;
-    stocks: Record<string, Number>;
-  }
-
   // CLIENT SIDE LOCALSTORAGE
-  const [stockInfo, setStockInfo] = useState<stockInterface | null>(null);
-  useEffect(() => {
-    setStockInfo(useStockInfo());
-  }, []);
+  const stockInfo = useStockInfo();
 
   return (
     <div className={styles.bannerContainer}>
