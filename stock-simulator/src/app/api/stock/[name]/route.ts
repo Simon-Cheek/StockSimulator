@@ -31,7 +31,6 @@ export async function GET(
       return errorResponse;
     }
     const data = await stockResponse.json();
-    console.log("data: ", data);
     const price = data["Global Quote"]["05. price"];
     if (price) {
       return NextResponse.json({ name: name, price: price });
