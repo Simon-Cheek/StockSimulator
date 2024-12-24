@@ -17,6 +17,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .stockList {
@@ -34,10 +35,7 @@
   padding: 20px;
 }
 
-.buyStockContainer {
+.menuContainer {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin: 40px 0;
 }
