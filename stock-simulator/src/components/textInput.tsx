@@ -52,10 +52,15 @@ export const InputForm = ({ onClick, buttonText, ...props }: CustomProps) => {
       </div>
 
       <Separator />
+      <div>
+        <Button hollow onClick={handleClick}>
+          {buttonText}
+        </Button>
 
-      <Button hollow onClick={handleClick}>
-        {buttonText}
-      </Button>
+        <Button hollow href="/">
+          Back to Home
+        </Button>
+      </div>
     </div>
   );
 };
