@@ -18,8 +18,8 @@ async function retrievePrice(name: string): Promise<number | null> {
       const cachedStock: stockCacheInfo = cacheData[name];
       const currentDate = new Date();
       const cachedDate = new Date(cachedStock.lastFetched);
-      currentDate.setHours(0, 0, 0, 0);
-      if (currentDate.getTime() <= cachedDate.getTime()) {
+      const fifteenMinutes = 1000 * 60 * 15;
+      if (currentDate.getTime() - cachedDate.getTime() <= fifteenMinutes) {
         // Cache is valid
         return cachedStock.price;
       }
@@ -35,7 +35,7 @@ async function retrievePrice(name: string): Promise<number | null> {
     if (!Number.isNaN(price)) {
       cacheData[name] = { price: data.price, lastFetched: new Date() };
       localStorage.setItem("stockSimulatorCache", JSON.stringify(cacheData));
-      return data.price;
+      return price;
     } else return null;
   } catch (e) {
     console.error(e);

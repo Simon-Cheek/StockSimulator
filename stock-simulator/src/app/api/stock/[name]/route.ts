@@ -16,7 +16,7 @@ export async function GET(
     );
   }
 
-  const stockURL = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${name.toUpperCase()}&apikey=${
+  const stockURL = `https://finnhub.io/api/v1/quote?symbol=${name.toUpperCase()}&token=${
     process.env.STOCK_API_KEY
   }`;
 
@@ -31,7 +31,7 @@ export async function GET(
       return errorResponse;
     }
     const data = await stockResponse.json();
-    const price = data["Global Quote"]["05. price"];
+    const price = data.c;
     if (price) {
       return NextResponse.json({ name: name, price: price });
     } else {
