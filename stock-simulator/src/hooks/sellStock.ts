@@ -5,7 +5,7 @@ interface userInfo {
   stocks: Record<string, number>;
 }
 
-export async function buyStock({
+export async function sellStock({
   name,
   amount,
 }: {
@@ -29,28 +29,25 @@ export async function buyStock({
       throw Error("No User Information in LocalStorage");
     }
     const stocks = parsedInfo.stocks;
-    let balance = parseFloat(parsedInfo.currentBalance);
+    let balance: number = parseFloat(parsedInfo.currentBalance);
 
-    // Make sure user can afford to buy the given stock
-    const totalPrice = parseFloat((price * amount).toFixed(2));
-    if (totalPrice > balance) {
-      throw Error(`User cannot afford ${amount} shares of stock: ${name}!`);
+    // Make sure user has the number of stocks they are selling
+    const userStockTotal: number = stocks[name];
+    if (userStockTotal < amount) {
+      throw Error(`User does not have enough of Stock: ${name}`);
     }
 
-    // Make sure user doesn't own 6 or more different stocks
-    if (!(name in stocks)) {
-      const numOfStocks = Object.keys(stocks).length;
-      if (numOfStocks >= 5) {
-        throw Error("User can only own stocks from 5 or less companies!");
-      }
-      // Add stocks to User Info
-      stocks[`${name}`] = amount;
-    } else {
-      stocks[`${name}`] += amount;
+    // Subtract stock number from total
+    stocks[name] -= amount;
+
+    // Remove if number is zero
+    if (stocks[name] === 0) {
+      delete stocks[name];
     }
 
-    // Subtract total price from balance
-    balance -= totalPrice;
+    // Calculate total value and add to user balance
+    const totalValue = price * amount;
+    balance += totalValue;
 
     // Save Information in LocalStorage
     const newStockInfo = {
