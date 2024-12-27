@@ -2,7 +2,6 @@
 import styles from "./home.module.css";
 import { Button } from "@/components/button";
 import { Separator } from "@/components/separator";
-import { InputForm } from "@/components/textInput";
 
 export default function Home() {
   return (
