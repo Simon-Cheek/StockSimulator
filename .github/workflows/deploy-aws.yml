@@ -32,7 +32,7 @@ on:
 
 env:
   AWS_REGION: "us-east-1" # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: "058264073942.dkr.ecr.us-east-1.amazonaws.com/simon-cheek/stock-simulator" # set this to your Amazon ECR repository name
+  ECR_REPOSITORY: 058264073942.dkr.ecr.us-east-1.amazonaws.com/simon-cheek/stock-simulator # set this to your Amazon ECR repository name
   ECS_SERVICE: SimonStockSimulatorService # set this to your Amazon ECS service name
   ECS_CLUSTER: SimonStockSimulatorCluster # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION:
