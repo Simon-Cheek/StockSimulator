@@ -14,7 +14,7 @@ interface CustomProps {
   buttonText: string;
 }
 
-export const InputForm = ({ onClick, buttonText, ...props }: CustomProps) => {
+export function InputForm({ onClick, buttonText, ...props }: CustomProps) {
   // State to hold the input value
   const [nameValue, setNameValue] = useState("");
   const [numberValue, setNumberValue] = useState("");
@@ -22,7 +22,7 @@ export const InputForm = ({ onClick, buttonText, ...props }: CustomProps) => {
     try {
       const stockAmount = parseInt(numberValue);
       if (Number.isNaN(stockAmount)) throw Error;
-      onClick && onClick({ name: nameValue, amount: stockAmount });
+      if (onClick) onClick({ name: nameValue, amount: stockAmount });
     } catch {
       alert("Invalid Input");
     }
@@ -63,4 +63,6 @@ export const InputForm = ({ onClick, buttonText, ...props }: CustomProps) => {
       </div>
     </div>
   );
-};
+}
+
+Input.displayName = "Input";
