@@ -73,7 +73,7 @@ export async function POST(
     ExpressionAttributeValues: {
       ":data": { S: userData || "" },
     },
-    ReturnValues: "ALL_NEW", // Returns the updated item
+    ReturnValues: "ALL_NEW",
   };
 
   try {
