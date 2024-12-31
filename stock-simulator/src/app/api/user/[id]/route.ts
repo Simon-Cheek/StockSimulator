@@ -61,7 +61,7 @@ export async function POST(
     );
   }
 
-  const updateParams: any = {
+  const updateParams = {
     TableName: process.env.TABLE_NAME,
     Key: {
       id: { S: id },
@@ -108,7 +108,7 @@ export async function PUT(
     );
   }
 
-  const putParams: any = {
+  const putParams = {
     TableName: process.env.TABLE_NAME,
     Item: {
       userID: { S: userID }, // Primary key
@@ -125,13 +125,7 @@ export async function PUT(
     return NextResponse.json({
       message: "User created successfully",
     });
-  } catch (error: any) {
-    if (error.name === "ConditionalCheckFailedException") {
-      return NextResponse.json(
-        { error: "User ID already exists" },
-        { status: 400 }
-      );
-    }
+  } catch (error) {
     console.error("DynamoDB error:", error);
     return NextResponse.json(
       { error: "Failed to create user" },
