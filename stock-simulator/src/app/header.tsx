@@ -5,7 +5,7 @@ import { H1, H3 } from "../components/headers";
 import styles from "./home.module.css";
 import { Span } from "@/components/span";
 import { Separator } from "@/components/separator";
-import { useStockInfo } from "@/hooks/getStockInfo";
+import { useStockInfo } from "@/functions/getStockInfo";
 
 export default function Header() {
   // CLIENT SIDE LOCALSTORAGE

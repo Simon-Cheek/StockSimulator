@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./home.module.css";
-import { useStockInfo } from "@/hooks/getStockInfo";
+import { useStockInfo } from "@/functions/getStockInfo";
 import { BulletedList } from "@/components/bulletedList";
 import { Paragraph } from "@/components/paragraph";
 

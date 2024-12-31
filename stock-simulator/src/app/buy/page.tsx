@@ -3,7 +3,7 @@ import { Paragraph } from "@/components/paragraph";
 import { InputForm } from "@/components/textInput";
 import styles from "./buy.module.css";
 import { Separator } from "@/components/separator";
-import { buyStock } from "@/hooks/buyStock";
+import { buyStock } from "@/functions/buyStock";
 import { useRouter } from "next/navigation";
 
 export default function Buy() {

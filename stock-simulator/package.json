@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.716.0",
     "classnames": "^2.5.1",
     "dotenv": "^16.4.7",
     "next": "15.1.2",
