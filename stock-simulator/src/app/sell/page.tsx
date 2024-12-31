@@ -4,7 +4,7 @@ import { InputForm } from "@/components/textInput";
 import { Separator } from "@/components/separator";
 import { useRouter } from "next/navigation";
 import styles from "./sell.module.css";
-import { sellStock } from "@/hooks/sellStock";
+import { sellStock } from "@/functions/sellStock";
 
 export default function Sell() {
   const router = useRouter();
