@@ -3,6 +3,10 @@ import {
   GetItemCommand,
   UpdateItemCommand,
   PutItemCommand,
+  ReturnValue,
+  UpdateItemCommandInput,
+  PutItemCommandInput,
+  GetItemCommandInput,
 } from "@aws-sdk/client-dynamodb";
 import dotenv from "dotenv";
 import { NextRequest, NextResponse } from "next/server";
@@ -19,7 +23,7 @@ export async function GET(
     return NextResponse.json({ error: "ID is required" }, { status: 400 });
   }
 
-  const awsParams = {
+  const awsParams: GetItemCommandInput = {
     TableName: process.env.TABLE_NAME,
     Key: {
       id: { S: id },
@@ -61,7 +65,7 @@ export async function POST(
     );
   }
 
-  const updateParams = {
+  const updateParams: UpdateItemCommandInput = {
     TableName: process.env.TABLE_NAME,
     Key: {
       id: { S: id },
@@ -73,7 +77,7 @@ export async function POST(
     ExpressionAttributeValues: {
       ":data": { S: userData || "" },
     },
-    ReturnValues: "ALL_NEW",
+    ReturnValues: ReturnValue.ALL_NEW,
   };
 
   try {
@@ -108,7 +112,7 @@ export async function PUT(
     );
   }
 
-  const putParams = {
+  const putParams: PutItemCommandInput = {
     TableName: process.env.TABLE_NAME,
     Item: {
       userID: { S: userID }, // Primary key
