@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { authenticateUser } from "./functions/authenticate";
+import { authenticateUser } from "./src/functions/authenticate";
 
 export async function middleware(req: NextRequest) {
   console.log("Middleware running");
