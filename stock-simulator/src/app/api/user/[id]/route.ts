@@ -8,7 +8,7 @@ import {
   PutItemCommandInput,
 } from "@aws-sdk/client-dynamodb";
 import dotenv from "dotenv";
-import cookie from "cookie";
+import * as cookie from "cookie";
 import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuidV4 } from "uuid";
 
