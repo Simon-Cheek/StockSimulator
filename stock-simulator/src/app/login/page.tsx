@@ -2,7 +2,6 @@
 import { H2 } from "@/components/headers";
 import { Separator } from "@/components/separator";
 import { InputForm } from "@/components/textInput";
-import { useRouter } from "next/navigation";
 
 async function loginUser(userID: string, password: string) {
   const res = await fetch("/api/login", {
