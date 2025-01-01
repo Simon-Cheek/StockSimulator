@@ -39,6 +39,8 @@ export async function authenticateUser(
   try {
     const user: UserInterface | null = await fetchUser(userID);
     const userData: string = user?.userData || "";
+    console.log("User Data: ");
+    console.log(userData); // TODO: REMOVE, this is DEBUG
     const parsedData = await JSON.parse(user?.userData || "");
     if (parsedData?.apiKey == apiKey) {
       return { userID: userID, userData: userData };
