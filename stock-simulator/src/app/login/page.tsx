@@ -4,13 +4,8 @@ import { InputForm } from "@/components/textInput";
 import { register } from "@/functions/register";
 import { useRouter } from "next/router";
 
-async function submit(data: { name: string; amount: string }) {
-  const router = useRouter();
-  await register(data.name, data.amount);
-  router.push("/");
-}
-
 export default function Login() {
+  const router = useRouter();
   return (
     <div
       style={{
@@ -23,7 +18,10 @@ export default function Login() {
       <H2>Login</H2>
       <InputForm
         buttonText="Login"
-        onClick={submit}
+        onClick={async ({ name, amount }) => {
+          await register(name, amount);
+          router.push("/");
+        }}
         firstText="Username"
         secondText="Password"
       />
