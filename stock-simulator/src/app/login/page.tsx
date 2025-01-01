@@ -1,8 +1,23 @@
 "use client";
 import { H2 } from "@/components/headers";
+import { Separator } from "@/components/separator";
 import { InputForm } from "@/components/textInput";
-import { register } from "@/functions/register";
 import { useRouter } from "next/navigation";
+
+async function loginUser(userID: string, password: string) {
+  const res = await fetch("/api/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userID: userID, password: password }),
+  });
+  if (res.ok) {
+    window.location.href = "/";
+  } else {
+    alert("Invalid Login");
+  }
+}
 
 export default function Login() {
   const router = useRouter();
@@ -19,12 +34,15 @@ export default function Login() {
       <InputForm
         buttonText="Login"
         onClick={async ({ name, amount }) => {
-          await register(name, amount);
-          router.push("/");
+          await loginUser(name, amount);
         }}
         firstText="Username"
         secondText="Password"
+        secondButton
       />
+
+      <Separator size="xl" />
+      <Separator size="xl" />
     </div>
   );
 }

@@ -10,6 +10,7 @@ export async function register(userID: string, password: string) {
       body: JSON.stringify(dto),
     });
     if (!res.ok) throw Error("Error registering user");
+    window.location.href = "/";
   } catch (e) {
     alert(e);
   }

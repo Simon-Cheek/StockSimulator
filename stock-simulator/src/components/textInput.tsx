@@ -4,6 +4,7 @@ import styles from "./components.module.css";
 import { forwardRef, useState } from "react";
 import { Paragraph } from "./paragraph";
 import { Separator } from "./separator";
+import { register } from "@/functions/register";
 
 export const Input = forwardRef<HTMLInputElement>(({ ...props }, ref) => (
   <input ref={ref} {...props} className={styles.input}></input>
@@ -14,6 +15,7 @@ interface CustomProps {
   buttonText: string;
   firstText?: string;
   secondText?: string;
+  secondButton?: boolean;
 }
 
 const defaultFirstText = "Name of Stock (Ticker Symbol)";
@@ -24,14 +26,17 @@ export function InputForm({
   buttonText,
   firstText = defaultFirstText,
   secondText = defaultSecondText,
+  secondButton,
   ...props
 }: CustomProps) {
   // State to hold the input value
   const [nameValue, setNameValue] = useState("");
   const [numberValue, setNumberValue] = useState("");
-  const handleClick = () => {
+  const handleClick = (
+    fn?: ({ name, amount }: { name: string; amount: string }) => void
+  ) => {
     try {
-      if (onClick) onClick({ name: nameValue, amount: numberValue });
+      if (fn) fn({ name: nameValue, amount: numberValue });
     } catch {
       alert("Invalid Input");
     }
@@ -62,13 +67,19 @@ export function InputForm({
 
       <Separator />
       <div>
-        <Button hollow onClick={handleClick}>
+        <Button hollow onClick={() => handleClick(onClick)}>
           {buttonText}
         </Button>
 
-        <Button hollow href="/">
-          Back to Home
-        </Button>
+        {!secondButton ? (
+          <Button hollow href="/">
+            Back to Home
+          </Button>
+        ) : (
+          <Button hollow onClick={() => register(nameValue, numberValue)}>
+            Register
+          </Button>
+        )}
       </div>
     </div>
   );

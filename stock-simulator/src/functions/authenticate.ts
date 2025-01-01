@@ -4,12 +4,12 @@ import dynamoClient from "./dynamo";
 
 dotenv.config();
 
-interface UserInterface {
+export interface UserInterface {
   userID: string;
   userData: string;
 }
 
-async function fetchUser(userID: string): Promise<UserInterface | null> {
+export async function fetchUser(userID: string): Promise<UserInterface | null> {
   const awsParams: GetItemCommandInput = {
     TableName: process.env.TABLE_NAME,
     Key: {
@@ -39,8 +39,6 @@ export async function authenticateUser(
   try {
     const user: UserInterface | null = await fetchUser(userID);
     const userData: string = user?.userData || "";
-    console.log("User Data: ");
-    console.log(userData); // TODO: REMOVE, this is DEBUG
     const parsedData = await JSON.parse(user?.userData || "");
     if (parsedData?.apiKey == apiKey) {
       return { userID: userID, userData: userData };
