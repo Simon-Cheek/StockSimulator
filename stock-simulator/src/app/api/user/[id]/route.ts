@@ -26,7 +26,7 @@ export async function GET(
   const awsParams: GetItemCommandInput = {
     TableName: process.env.TABLE_NAME,
     Key: {
-      id: { S: id },
+      userID: { S: id },
     },
   };
 
@@ -68,7 +68,7 @@ export async function POST(
   const updateParams: UpdateItemCommandInput = {
     TableName: process.env.TABLE_NAME,
     Key: {
-      id: { S: id },
+      userID: { S: id },
     },
     UpdateExpression: "set #data = :data",
     ExpressionAttributeNames: {
