@@ -1,8 +1,5 @@
 import { GetItemCommand, GetItemCommandInput } from "@aws-sdk/client-dynamodb";
-import dotenv from "dotenv";
 import dynamoClient from "./dynamo";
-
-dotenv.config();
 
 export interface UserInterface {
   userID: string;
