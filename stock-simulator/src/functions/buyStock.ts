@@ -10,12 +10,12 @@ export async function buyStock({
   amount,
 }: {
   name: string;
-  amount: number;
+  amount: string;
 }) {
   const price: number | null = await retrievePrice(name);
 
   // Make sure amount isn't a decimal
-  amount = Math.floor(amount);
+  const numAmount = Math.floor(parseFloat(amount));
 
   // Make sure price is returned from API
   try {
@@ -32,9 +32,9 @@ export async function buyStock({
     let balance = parseFloat(parsedInfo.currentBalance);
 
     // Make sure user can afford to buy the given stock
-    const totalPrice = parseFloat((price * amount).toFixed(2));
+    const totalPrice = parseFloat((price * numAmount).toFixed(2));
     if (totalPrice > balance) {
-      throw Error(`User cannot afford ${amount} shares of stock: ${name}!`);
+      throw Error(`User cannot afford ${numAmount} shares of stock: ${name}!`);
     }
 
     // Make sure user doesn't own 6 or more different stocks
@@ -44,9 +44,9 @@ export async function buyStock({
         throw Error("User can only own stocks from 5 or less companies!");
       }
       // Add stocks to User Info
-      stocks[`${name}`] = amount;
+      stocks[`${name}`] = numAmount;
     } else {
-      stocks[`${name}`] += amount;
+      stocks[`${name}`] += numAmount;
     }
 
     // Subtract total price from balance

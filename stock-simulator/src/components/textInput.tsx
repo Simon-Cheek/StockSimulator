@@ -10,19 +10,28 @@ export const Input = forwardRef<HTMLInputElement>(({ ...props }, ref) => (
 ));
 
 interface CustomProps {
-  onClick?: (data: { name: string; amount: number }) => void;
+  onClick?: (data: { name: string; amount: string }) => void;
   buttonText: string;
+  firstText?: string;
+  secondText?: string;
 }
 
-export function InputForm({ onClick, buttonText, ...props }: CustomProps) {
+const defaultFirstText = "Name of Stock (Ticker Symbol)";
+const defaultSecondText = "Number of Stocks";
+
+export function InputForm({
+  onClick,
+  buttonText,
+  firstText = defaultFirstText,
+  secondText = defaultSecondText,
+  ...props
+}: CustomProps) {
   // State to hold the input value
   const [nameValue, setNameValue] = useState("");
   const [numberValue, setNumberValue] = useState("");
   const handleClick = () => {
     try {
-      const stockAmount = parseInt(numberValue);
-      if (Number.isNaN(stockAmount)) throw Error;
-      if (onClick) onClick({ name: nameValue, amount: stockAmount });
+      if (onClick) onClick({ name: nameValue, amount: numberValue });
     } catch {
       alert("Invalid Input");
     }
@@ -31,7 +40,7 @@ export function InputForm({ onClick, buttonText, ...props }: CustomProps) {
     <div className={styles.inputFormContainer}>
       <div className={styles.inputContainer}>
         <Paragraph style={{ margin: "0px", marginLeft: "12px" }}>
-          Name of Stock (Ticker Symbol)
+          {firstText}
         </Paragraph>
         <input
           {...props}
@@ -42,7 +51,7 @@ export function InputForm({ onClick, buttonText, ...props }: CustomProps) {
 
       <div className={styles.inputContainer}>
         <Paragraph style={{ margin: "0px", marginLeft: "12px" }}>
-          Number of Stocks
+          {secondText}
         </Paragraph>
         <input
           {...props}

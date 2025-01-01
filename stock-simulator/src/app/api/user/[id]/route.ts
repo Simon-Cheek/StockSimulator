@@ -1,15 +1,16 @@
+import { authenticateUser } from "@/functions/authenticate";
 import dynamoClient from "@/functions/dynamo";
 import {
-  GetItemCommand,
   UpdateItemCommand,
   PutItemCommand,
   ReturnValue,
   UpdateItemCommandInput,
   PutItemCommandInput,
-  GetItemCommandInput,
 } from "@aws-sdk/client-dynamodb";
 import dotenv from "dotenv";
+import cookie from "cookie";
 import { NextRequest, NextResponse } from "next/server";
+import { v4 as uuidV4 } from "uuid";
 
 dotenv.config();
 
@@ -23,23 +24,16 @@ export async function GET(
     return NextResponse.json({ error: "ID is required" }, { status: 400 });
   }
 
-  const awsParams: GetItemCommandInput = {
-    TableName: process.env.TABLE_NAME,
-    Key: {
-      userID: { S: id },
-    },
-  };
+  const cookies = cookie.parse(req.headers.get("cookie") || "");
+  const apiKey = cookies?.stockSimKey || "";
 
   try {
-    // Send the GetItem request to DynamoDB
-    const command = new GetItemCommand(awsParams);
-    const data = await dynamoClient.send(command);
-
-    if (!data.Item) {
-      return NextResponse.json({ error: "Data not found" }, { status: 404 });
+    const user = await authenticateUser(id, apiKey);
+    if (user) {
+      return NextResponse.json(user);
+    } else {
+      return NextResponse.json({ Message: "Unauthorized" }, { status: 401 });
     }
-
-    return NextResponse.json({ item: data.Item });
   } catch (error) {
     console.error("DynamoDB error:", error);
     return NextResponse.json(
@@ -81,6 +75,13 @@ export async function POST(
   };
 
   try {
+    // Authenticate
+    const cookies = cookie.parse(req.headers.get("cookie") || "");
+    const apiKey = cookies?.stockSimKey || "";
+    const user = await authenticateUser(id, apiKey);
+    if (!user) {
+      return NextResponse.json({ Message: "Unauthorized" }, { status: 401 });
+    }
     // Send the UpdateItem request to DynamoDB
     const command = new UpdateItemCommand(updateParams);
     const data = await dynamoClient.send(command);
@@ -98,37 +99,53 @@ export async function POST(
   }
 }
 
+// Endpoint for registering a user
 export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const userID = (await params).id;
-  const { userData } = await req.json();
+  const { password } = await req.json();
 
-  if (!userData || !userID) {
+  if (!password || !userID) {
     return NextResponse.json(
-      { error: "ID and Data are required" },
+      { error: "ID and Password are required" },
       { status: 400 }
     );
   }
 
-  const putParams: PutItemCommandInput = {
-    TableName: process.env.TABLE_NAME,
-    Item: {
-      userID: { S: userID }, // Primary key
-      userData: { S: userData }, // Associated data
-    },
-    ConditionExpression: "attribute_not_exists(userID)", // Ensure userID doesn't already exist
+  const apiKey = uuidV4();
+  const userData = {
+    apiKey: apiKey,
+    password: password,
+    balance: 100000.0,
+    stocks: {},
   };
 
   try {
+    const putParams: PutItemCommandInput = {
+      TableName: process.env.TABLE_NAME,
+      Item: {
+        userID: { S: userID },
+        userData: { S: JSON.stringify(userData) },
+      },
+      ConditionExpression: "attribute_not_exists(userID)", // Ensure userID doesn't already exist
+    };
+
     // Send the PutItem request to DynamoDB
     const command = new PutItemCommand(putParams);
     await dynamoClient.send(command);
 
-    return NextResponse.json({
+    const res = NextResponse.json({
       message: "User created successfully",
     });
+    res.cookies.set("stockSimKey", apiKey, {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
+    return res;
   } catch (error) {
     console.error("DynamoDB error:", error);
     return NextResponse.json(

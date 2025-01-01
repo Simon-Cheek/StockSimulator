@@ -10,12 +10,12 @@ export async function sellStock({
   amount,
 }: {
   name: string;
-  amount: number;
+  amount: string;
 }) {
   const price: number | null = await retrievePrice(name);
 
   // Make sure amount isn't a decimal
-  amount = Math.floor(amount);
+  const numAmount = Math.floor(parseFloat(amount));
 
   // Make sure price is returned from API
   try {
@@ -33,12 +33,12 @@ export async function sellStock({
 
     // Make sure user has the number of stocks they are selling
     const userStockTotal: number = stocks[name];
-    if (userStockTotal < amount) {
+    if (userStockTotal < numAmount) {
       throw Error(`User does not have enough of Stock: ${name}`);
     }
 
     // Subtract stock number from total
-    stocks[name] -= amount;
+    stocks[name] -= numAmount;
 
     // Remove if number is zero
     if (stocks[name] === 0) {
@@ -46,7 +46,7 @@ export async function sellStock({
     }
 
     // Calculate total value and add to user balance
-    const totalValue = price * amount;
+    const totalValue = price * numAmount;
     balance += totalValue;
 
     // Save Information in LocalStorage
