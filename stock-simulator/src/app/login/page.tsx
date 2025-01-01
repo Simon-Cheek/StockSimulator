@@ -20,7 +20,6 @@ async function loginUser(userID: string, password: string) {
 }
 
 export default function Login() {
-  const router = useRouter();
   return (
     <div
       style={{
