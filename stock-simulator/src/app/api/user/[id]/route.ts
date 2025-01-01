@@ -145,6 +145,12 @@ export async function PUT(
       secure: true,
       sameSite: "strict",
     });
+    res.cookies.set("stockSimUser", userID, {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
     return res;
   } catch (error) {
     console.error("DynamoDB error:", error);

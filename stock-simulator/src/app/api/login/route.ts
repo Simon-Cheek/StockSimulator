@@ -21,6 +21,12 @@ export async function POST(req: NextRequest) {
         secure: true,
         sameSite: "strict",
       });
+      res.cookies.set("stockSimUser", userID, {
+        path: "/",
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      });
       return res;
     }
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
