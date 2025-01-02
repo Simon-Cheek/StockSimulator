@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authenticateUser } from "./functions/authenticate";
 
+console.log("Middleware function file?");
+
 export default async function middleware(req: NextRequest) {
   console.log("Middleware running");
   const apiKey = req.cookies.get("stockSimKey")?.value || "";
