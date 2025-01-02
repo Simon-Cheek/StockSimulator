@@ -19,6 +19,7 @@ export async function fetchUser(userID: string): Promise<UserInterface | null> {
     const command = new GetItemCommand(awsParams);
     const data: string | null =
       (await dynamoClient.send(command)).Item?.userData.S || null;
+    console.log("Fetched user data: ", data);
     if (data) {
       return { userID: userID, userData: data };
     }
@@ -34,9 +35,11 @@ export async function authenticateUser(
   apiKey: string
 ): Promise<UserInterface | null> {
   try {
+    console.error("about to authenticate user");
     const user: UserInterface | null = await fetchUser(userID);
-    const userData: string = user?.userData || "";
-    const parsedData = await JSON.parse(user?.userData || "");
+    console.log("Fetched user in auth function: ", user);
+    const userData: string = user?.userData || "{}";
+    const parsedData = await JSON.parse(user?.userData || "{}");
     if (parsedData?.apiKey == apiKey) {
       return { userID: userID, userData: userData };
     }
