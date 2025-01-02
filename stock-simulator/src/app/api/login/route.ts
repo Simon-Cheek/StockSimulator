@@ -23,7 +23,6 @@ export async function POST(req: NextRequest) {
       });
       res.cookies.set("stockSimUser", userID, {
         path: "/",
-        httpOnly: true,
         secure: true,
         sameSite: "strict",
       });
