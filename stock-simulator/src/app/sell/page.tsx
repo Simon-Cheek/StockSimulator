@@ -6,11 +6,12 @@ import { useRouter } from "next/navigation";
 import styles from "./sell.module.css";
 import { sellStock } from "@/functions/sellStock";
 import Footer from "../footer";
+import { AuthPage } from "@/components/authPage";
 
 export default function Sell() {
   const router = useRouter();
   return (
-    <>
+    <AuthPage>
       <div className={styles.sellContainer}>
         <InputForm
           buttonText="Sell"
@@ -26,6 +27,6 @@ export default function Sell() {
         </Paragraph>
       </div>
       <Footer />
-    </>
+    </AuthPage>
   );
 }
