@@ -1,21 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authenticateUser } from "./functions/authenticate";
-
-console.log("Middleware function file?");
+import * as cookie from "cookie";
 
 export default async function middleware(req: NextRequest) {
-  console.log("Middleware running");
-  const apiKey = req.cookies.get("stockSimKey")?.value || "";
-  const userID = req.cookies.get("stockSimUser")?.value || "";
+  const cookies = cookie.parse(req.headers.get("cookie") || "");
+  const apiKey = cookies?.stockSimKey || "";
+  const userID = cookies?.stockSimUser || "";
   const { pathname } = req.nextUrl;
 
   // Allow login page and static assets
   if (pathname.startsWith("/login") || pathname.startsWith("/_next")) {
-    console.log("Starts with login or _next");
     return NextResponse.next();
   }
   // Authenticate User
   try {
+    console.error("MIddleware running!");
+    console.error("USERID: ", userID);
+    console.error("apiKEY", apiKey);
     if (!apiKey || !userID) {
       throw Error("Missing auth information");
     }
@@ -24,11 +25,11 @@ export default async function middleware(req: NextRequest) {
     if (!auth) {
       throw Error("Unauthorized");
     }
-  } catch (e) {
+  } catch {
     // Redirect
-    console.log("Error: ", e);
     const loginUrl = req.nextUrl.clone();
     loginUrl.pathname = "/login";
+    console.log("Redirecting?");
     return NextResponse.redirect(loginUrl);
   }
   return NextResponse.next();
