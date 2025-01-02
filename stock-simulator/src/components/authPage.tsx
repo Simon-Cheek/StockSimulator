@@ -9,6 +9,7 @@ type AuthProps = {
 export function AuthPage({ children }: AuthProps) {
   useEffect(() => {
     async function authenticateUser() {
+      console.log(Cookies.get());
       const userID = Cookies.get("stockSimUser");
       console.log(userID);
       if (!userID) {
