@@ -7,6 +7,9 @@ export interface UserInterface {
 }
 
 export async function fetchUser(userID: string): Promise<UserInterface | null> {
+  console.log("ENV INFO: ");
+  console.log(process.env);
+  console.log(process.env.TABLE_NAME);
   const awsParams: GetItemCommandInput = {
     TableName: process.env.TABLE_NAME,
     Key: {
