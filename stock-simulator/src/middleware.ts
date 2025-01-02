@@ -8,20 +8,21 @@ export default async function middleware(req: NextRequest) {
   const userID = cookies?.stockSimUser || "";
   const { pathname } = req.nextUrl;
 
+  const clientAuthRoutes = ["/", "/buy", "/sell"];
+
   // Allow login page and static assets
-  if (pathname.startsWith("/login") || pathname.startsWith("/_next")) {
+  if (!clientAuthRoutes.includes(pathname)) {
+    console.error("Not checking pathname: ", pathname);
     return NextResponse.next();
   }
   // Authenticate User
   try {
-    console.error("MIddleware running!");
-    console.error("USERID: ", userID);
-    console.error("apiKEY", apiKey);
+    console.error("UserID | apiKey | pathname");
+    console.error(userID, apiKey, pathname);
     if (!apiKey || !userID) {
       throw Error("Missing auth information");
     }
     const auth = await authenticateUser(userID, apiKey);
-    console.log("AUTH: ", auth);
     if (!auth) {
       throw Error("Unauthorized");
     }
@@ -29,7 +30,6 @@ export default async function middleware(req: NextRequest) {
     // Redirect
     const loginUrl = req.nextUrl.clone();
     loginUrl.pathname = "/login";
-    console.log("Redirecting?");
     return NextResponse.redirect(loginUrl);
   }
   return NextResponse.next();
