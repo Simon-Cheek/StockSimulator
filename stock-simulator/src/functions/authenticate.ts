@@ -7,15 +7,13 @@ export interface UserInterface {
 }
 
 export async function fetchUser(userID: string): Promise<UserInterface | null> {
-  console.log("ENV INFO: ");
-  console.log(process.env);
-  console.log(process.env.TABLE_NAME);
   const awsParams: GetItemCommandInput = {
     TableName: process.env.TABLE_NAME,
     Key: {
       userID: { S: userID },
     },
   };
+  console.log("Params: ", awsParams);
 
   try {
     // Send the GetItem request to DynamoDB
@@ -39,6 +37,7 @@ export async function authenticateUser(
 ): Promise<UserInterface | null> {
   try {
     console.error("about to authenticate user");
+    console.log("userID: ", userID, " apiKey: ", apiKey);
     const user: UserInterface | null = await fetchUser(userID);
     console.log("Fetched user in auth function: ", user);
     const userData: string = user?.userData || "{}";
