@@ -24,7 +24,7 @@ export async function buyStock({
       throw Error("Invalid User");
     }
     const data = await res.json();
-    const userData = data.userData;
+    const userData = JSON.parse(data.userData || "{}");
     let balance = parseFloat(userData.balance);
     const stocks = userData.stocks;
 
