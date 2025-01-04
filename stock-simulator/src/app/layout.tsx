@@ -27,7 +27,7 @@ export default async function RootLayout({
     return redirect("/login");
   }
 
-  const res = await fetch(`/api/user/${userID}`);
+  const res = await fetch(`https://stock.simoncheek.com/api/user/${userID}`);
   if (!res.ok) {
     return redirect("/login");
   }
