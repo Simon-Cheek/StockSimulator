@@ -70,7 +70,7 @@ export async function POST(
       "#data": "userData",
     },
     ExpressionAttributeValues: {
-      ":data": { S: userData || "" },
+      ":data": { S: JSON.stringify(userData) || "" },
     },
     ReturnValues: ReturnValue.ALL_NEW,
   };
@@ -78,7 +78,6 @@ export async function POST(
   try {
     // Authenticate
     const cookies = cookie.parse(req.headers.get("cookie") || "");
-    console.log("POST cookies: ", cookies);
     const apiKey = cookies?.stockSimKey || "";
     const user = await authenticateUser(id, apiKey);
     if (!user) {
