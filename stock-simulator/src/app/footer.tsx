@@ -1,13 +1,13 @@
 "use client";
 
 import styles from "./home.module.css";
-import { useStockInfo } from "@/functions/getStockInfo";
 import { BulletedList } from "@/components/bulletedList";
 import { Paragraph } from "@/components/paragraph";
+import { PageProps } from "./page";
 
-export default function Footer() {
+export default function Footer({ data }: PageProps) {
   // CLIENT SIDE LOCALSTORAGE
-  const stockInfo = useStockInfo();
+  const stockInfo = data;
 
   const listOfStocks = stockInfo
     ? Object.entries(stockInfo.stocks).map(([k, v]) => `${k} (${v})`)

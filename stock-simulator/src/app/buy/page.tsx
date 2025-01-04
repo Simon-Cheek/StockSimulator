@@ -7,8 +7,41 @@ import { buyStock } from "@/functions/buyStock";
 import { useRouter } from "next/navigation";
 import Footer from "../footer";
 import { AuthPage } from "@/components/authPage";
+import { GetServerSidePropsContext } from "next";
+import * as cookie from "cookie";
+import { PageProps, UserData } from "../page";
 
-export default function Buy() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const cookies = cookie.parse(context.req.headers.cookie || "");
+  console.log(cookies);
+  const userID = cookies?.stockSimUser;
+  console.log(userID);
+  if (!userID) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  const res = await fetch(`/api/user/${userID}`);
+  if (!res.ok) {
+    console.log("res not ok");
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+  const data = await res.json();
+  const userData: UserData = data.userData;
+  console.log(userData);
+
+  return { props: { data: userData } };
+}
+
+export default function Buy({ data }: PageProps) {
   const router = useRouter();
   return (
     <AuthPage>
@@ -26,7 +59,7 @@ export default function Buy() {
           Note: Stocks from up to 5 different companies can be held at once
         </Paragraph>
       </div>
-      <Footer />
+      <Footer data={data} />
     </AuthPage>
   );
 }
