@@ -1,12 +1,9 @@
-"use client";
-
 import styles from "./home.module.css";
 import { BulletedList } from "@/components/bulletedList";
 import { Paragraph } from "@/components/paragraph";
 import { PageProps } from "./page";
 
 export default function Footer({ data }: PageProps) {
-  // CLIENT SIDE LOCALSTORAGE
   const stockInfo = data;
 
   const listOfStocks = stockInfo

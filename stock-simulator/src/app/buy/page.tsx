@@ -5,7 +5,8 @@ import Buy from "./buy";
 
 export default async function BuyPage() {
   const cookieStore = await cookies();
-  const userID = cookieStore.get("stockSimUser");
+  const user = cookieStore.get("stockSimUser");
+  const userID = user?.value;
 
   if (!userID) {
     return redirect("/login");

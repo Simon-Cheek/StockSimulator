@@ -15,19 +15,25 @@ export interface PageProps {
 
 export default async function HomePage() {
   const cookieStore = await cookies();
-  const userID = cookieStore.get("stockSimUser");
+  console.log(cookieStore);
+  const user = cookieStore.get("stockSimUser");
+  console.log(user);
+  const userID = user?.value;
+  console.log(userID);
 
   if (!userID) {
     return redirect("/login");
   }
 
   const res = await fetch(`/api/user/${userID}`);
+  console.log("Res: ", res);
   if (!res.ok) {
     return redirect("/login");
   }
 
   const data = await res.json();
   const userData: UserData = data.userData;
+  console.log("UserData: ", userData);
 
   return <Home data={userData} />;
 }
