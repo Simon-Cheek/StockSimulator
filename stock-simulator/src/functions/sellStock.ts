@@ -53,7 +53,7 @@ export async function sellStock({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newUserInfo),
+      body: JSON.stringify({ userData: newUserInfo }),
     });
     if (!postRes.ok) {
       throw Error(`Invalid post request: ${postRes}`);
