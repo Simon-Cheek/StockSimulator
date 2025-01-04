@@ -51,16 +51,13 @@ export async function buyStock({
 
     // Save Information in DB
     const newUserInfo = { ...userData, balance };
-    const postRes = await fetch(
-      `https://stock.simoncheek.com/api/user/${userID}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newUserInfo),
-      }
-    );
+    const postRes = await fetch(`/api/user/${userID}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUserInfo),
+    });
     if (!postRes.ok) {
       throw Error(`Invalid post request: ${postRes}`);
     }
