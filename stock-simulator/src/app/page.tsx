@@ -16,6 +16,7 @@ export interface PageProps {
 export default async function HomePage() {
   const cookieStore = await cookies();
   const user = cookieStore.get("stockSimUser");
+  const apiKey = cookieStore.get("stockSimKey")?.value;
   console.log("USer from cookie: ", user);
   const userID = user?.value;
 
@@ -23,7 +24,11 @@ export default async function HomePage() {
     return redirect("/login");
   }
 
-  const res = await fetch(`https://stock.simoncheek.com/api/user/${userID}`);
+  const res = await fetch(`https://stock.simoncheek.com/api/user/${userID}`, {
+    headers: {
+      Cookie: `stockSimKey=${apiKey}`,
+    },
+  });
   console.log("Res: ", res);
   if (!res.ok) {
     return redirect("/login");
