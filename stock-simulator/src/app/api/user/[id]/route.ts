@@ -78,6 +78,7 @@ export async function POST(
   try {
     // Authenticate
     const cookies = cookie.parse(req.headers.get("cookie") || "");
+    console.log("POST cookies: ", cookies);
     const apiKey = cookies?.stockSimKey || "";
     const user = await authenticateUser(id, apiKey);
     if (!user) {

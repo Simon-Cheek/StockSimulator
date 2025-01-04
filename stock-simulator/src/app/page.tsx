@@ -29,7 +29,6 @@ export default async function HomePage() {
       Cookie: `stockSimKey=${apiKey}`,
     },
   });
-  console.log("Res: ", res);
   if (!res.ok) {
     return redirect("/login");
   }
