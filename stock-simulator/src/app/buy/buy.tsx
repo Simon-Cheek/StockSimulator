@@ -8,16 +8,22 @@ import { useRouter } from "next/navigation";
 import Footer from "../footer";
 import { AuthPage } from "@/components/authPage";
 import { PageProps } from "../page";
+import Header from "../header";
 
-export default function Buy({ data }: PageProps) {
+interface ExchangeProps extends PageProps {
+  userID: string;
+}
+
+export default function Buy({ data, userID }: ExchangeProps) {
   const router = useRouter();
   return (
     <AuthPage>
+      <Header data={data} />
       <div className={styles.buyContainer}>
         <InputForm
           buttonText="Buy"
           onClick={async (params) => {
-            await buyStock(params);
+            await buyStock({ ...params, userID });
             router.push("/");
           }}
         />

@@ -1,16 +1,13 @@
 import { retrievePrice } from "./price";
 
-interface userInfo {
-  currentBalance: string;
-  stocks: Record<string, number>;
-}
-
 export async function buyStock({
+  userID,
   name,
   amount,
 }: {
   name: string;
   amount: string;
+  userID: string;
 }) {
   const price: number | null = await retrievePrice(name);
 
@@ -22,14 +19,14 @@ export async function buyStock({
     if (price === undefined || price === null) {
       throw Error(`Unable to Retrieve Stock Name = ${name}.`);
     }
-    const info = localStorage.getItem("stockSimulatorUser") || "";
-    const parsedInfo: userInfo = await JSON.parse(info);
-    // Make sure User Data Exists
-    if (!parsedInfo?.stocks) {
-      throw Error("No User Information in LocalStorage");
+    const res = await fetch(`https://stock.simoncheek.com/api/user/${userID}`);
+    if (!res.ok) {
+      throw Error("Invalid User");
     }
-    const stocks = parsedInfo.stocks;
-    let balance = parseFloat(parsedInfo.currentBalance);
+    const data = await res.json();
+    const userData = data.userData;
+    let balance = userData.balance;
+    const stocks = userData.stocks;
 
     // Make sure user can afford to buy the given stock
     const totalPrice = parseFloat((price * numAmount).toFixed(2));
@@ -52,12 +49,21 @@ export async function buyStock({
     // Subtract total price from balance
     balance -= totalPrice;
 
-    // Save Information in LocalStorage
-    const newStockInfo = {
-      currentBalance: balance.toFixed(2),
-      stocks: stocks,
-    };
-    localStorage.setItem("stockSimulatorUser", JSON.stringify(newStockInfo));
+    // Save Information in DB
+    const newUserInfo = { ...userData, balance };
+    const postRes = await fetch(
+      `https://stock.simoncheek.com/api/user/${userID}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUserInfo),
+      }
+    );
+    if (!postRes.ok) {
+      throw Error(`Invalid post request: ${postRes}`);
+    }
   } catch (e) {
     alert(e);
   }

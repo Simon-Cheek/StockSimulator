@@ -20,26 +20,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const userID = cookieStore.get("stockSimUser");
-
-  if (!userID) {
-    return redirect("/login");
-  }
-
-  const res = await fetch(`https://stock.simoncheek.com/api/user/${userID}`);
-  if (!res.ok) {
-    return redirect("/login");
-  }
-
-  const data = await res.json();
-  const userData: UserData = data.userData;
   return (
     <html lang="en">
-      <body className={`${mont.className}`}>
-        <Header data={userData} />
-        {children}
-      </body>
+      <body className={`${mont.className}`}>{children}</body>
     </html>
   );
 }

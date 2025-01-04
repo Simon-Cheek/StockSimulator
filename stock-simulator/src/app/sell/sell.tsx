@@ -8,11 +8,13 @@ import Footer from "../footer";
 import { AuthPage } from "@/components/authPage";
 import { PageProps } from "../page";
 import { useRouter } from "next/navigation";
+import Header from "../header";
 
 export default function Sell({ data }: PageProps) {
   const router = useRouter();
   return (
     <AuthPage>
+      <Header data={data} />
       <div className={styles.sellContainer}>
         <InputForm
           buttonText="Sell"
