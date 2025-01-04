@@ -15,11 +15,9 @@ export interface PageProps {
 
 export default async function HomePage() {
   const cookieStore = await cookies();
-  console.log(cookieStore);
   const user = cookieStore.get("stockSimUser");
-  console.log(user);
+  console.log("USer from cookie: ", user);
   const userID = user?.value;
-  console.log(userID);
 
   if (!userID) {
     return redirect("/login");

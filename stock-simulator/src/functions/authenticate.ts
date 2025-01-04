@@ -13,7 +13,6 @@ export async function fetchUser(userID: string): Promise<UserInterface | null> {
       userID: { S: userID },
     },
   };
-  console.log("Params: ", awsParams);
 
   try {
     // Send the GetItem request to DynamoDB

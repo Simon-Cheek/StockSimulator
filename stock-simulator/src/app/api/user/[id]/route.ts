@@ -25,6 +25,7 @@ export async function GET(
   }
 
   const cookies = cookie.parse(req.headers.get("cookie") || "");
+  console.log("Cookies: ", cookies);
   const apiKey = cookies?.stockSimKey || "";
 
   try {
