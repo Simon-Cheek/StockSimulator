@@ -1,65 +1,23 @@
-"use client";
-import { Paragraph } from "@/components/paragraph";
-import { InputForm } from "@/components/textInput";
-import { Separator } from "@/components/separator";
-import { useRouter } from "next/navigation";
-import styles from "./sell.module.css";
-import { sellStock } from "@/functions/sellStock";
-import Footer from "../footer";
-import { AuthPage } from "@/components/authPage";
-import * as cookie from "cookie";
-import { GetServerSidePropsContext } from "next";
-import { PageProps, UserData } from "../page";
+import { cookies } from "next/headers";
+import { UserData } from "../page";
+import { redirect } from "next/navigation";
+import Sell from "./sell";
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const cookies = cookie.parse(context.req.headers.cookie || "");
-  console.log(cookies);
-  const userID = cookies?.stockSimUser;
-  console.log(userID);
+export default async function SellPage() {
+  const cookieStore = await cookies();
+  const userID = cookieStore.get("stockSimUser");
+
   if (!userID) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
+    return redirect("/login");
   }
+
   const res = await fetch(`/api/user/${userID}`);
   if (!res.ok) {
-    console.log("res not ok");
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
+    return redirect("/login");
   }
+
   const data = await res.json();
   const userData: UserData = data.userData;
-  console.log(userData);
 
-  return { props: { data: userData } };
-}
-
-export default function Sell({ data }: PageProps) {
-  const router = useRouter();
-  return (
-    <AuthPage>
-      <div className={styles.sellContainer}>
-        <InputForm
-          buttonText="Sell"
-          onClick={async (params) => {
-            await sellStock(params);
-            router.push("/");
-            window.dispatchEvent(new Event("localStorageChange"));
-          }}
-        />
-        <Separator />
-        <Paragraph italic size="xs">
-          Note: Stocks from up to 5 different companies can be held at once
-        </Paragraph>
-      </div>
-      <Footer data={data} />
-    </AuthPage>
-  );
+  return <Sell data={userData} />;
 }
