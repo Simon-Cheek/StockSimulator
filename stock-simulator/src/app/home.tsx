@@ -8,7 +8,6 @@ import { PageProps } from "./page";
 import Header from "./header";
 
 export default function Home({ data }: PageProps) {
-  console.log("Data", data);
   return (
     <AuthPage>
       <Header data={data} />

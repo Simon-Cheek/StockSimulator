@@ -5,9 +5,8 @@ import { Span } from "@/components/span";
 import { Separator } from "@/components/separator";
 import { PageProps } from "./page";
 
-export default function Header({ data }: PageProps) {
+export default function Header({ data }: PageProps | { data: null }) {
   const stockInfo = data;
-  console.log(data);
 
   return (
     <div className={styles.bannerContainer}>

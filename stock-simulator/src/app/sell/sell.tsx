@@ -11,7 +11,6 @@ import Header from "../header";
 import { ExchangeProps } from "../buy/buy";
 
 export default function Sell({ data, userID }: ExchangeProps) {
-  console.log("Data", data);
   const router = useRouter();
   return (
     <AuthPage>
