@@ -1,15 +1,12 @@
-"use client";
-
 import { colors } from "@/components/colors";
 import { H1, H3 } from "../components/headers";
 import styles from "./home.module.css";
 import { Span } from "@/components/span";
 import { Separator } from "@/components/separator";
-import { useStockInfo } from "@/functions/getStockInfo";
+import { PageProps } from "./page";
 
-export default function Header() {
-  // CLIENT SIDE LOCALSTORAGE
-  const stockInfo = useStockInfo();
+export default function Header({ data }: PageProps) {
+  const stockInfo = data;
 
   return (
     <div className={styles.bannerContainer}>
@@ -19,7 +16,7 @@ export default function Header() {
         <H3>
           Current Value:
           <Span color={colors.blue}>
-            {stockInfo ? ` $${stockInfo.currentBalance}` : " $0"}
+            {stockInfo ? ` $${stockInfo.balance}` : " $0"}
           </Span>
         </H3>
       </div>
