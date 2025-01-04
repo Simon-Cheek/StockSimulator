@@ -25,7 +25,7 @@ export async function buyStock({
     }
     const data = await res.json();
     const userData = data.userData;
-    let balance = userData.balance;
+    let balance = parseFloat(userData.balance);
     const stocks = userData.stocks;
 
     // Make sure user can afford to buy the given stock

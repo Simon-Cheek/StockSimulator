@@ -20,5 +20,5 @@ export default async function SellPage() {
   const data = await res.json();
   const userData: UserData = data.userData;
 
-  return <Sell data={userData} />;
+  return <Sell data={userData} userID={userID} />;
 }

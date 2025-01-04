@@ -6,11 +6,11 @@ import styles from "./sell.module.css";
 import { sellStock } from "@/functions/sellStock";
 import Footer from "../footer";
 import { AuthPage } from "@/components/authPage";
-import { PageProps } from "../page";
 import { useRouter } from "next/navigation";
 import Header from "../header";
+import { ExchangeProps } from "../buy/buy";
 
-export default function Sell({ data }: PageProps) {
+export default function Sell({ data, userID }: ExchangeProps) {
   const router = useRouter();
   return (
     <AuthPage>
@@ -19,8 +19,7 @@ export default function Sell({ data }: PageProps) {
         <InputForm
           buttonText="Sell"
           onClick={async (params) => {
-            await sellStock(params);
-            // Use client-side redirect after the sell action
+            await sellStock({ ...params, userID });
             router.push("/"); // Navigate to home page
           }}
         />

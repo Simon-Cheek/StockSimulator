@@ -10,7 +10,7 @@ import { AuthPage } from "@/components/authPage";
 import { PageProps } from "../page";
 import Header from "../header";
 
-interface ExchangeProps extends PageProps {
+export interface ExchangeProps extends PageProps {
   userID: string;
 }
 
