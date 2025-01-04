@@ -6,11 +6,11 @@ import styles from "./sell.module.css";
 import { sellStock } from "@/functions/sellStock";
 import Footer from "../footer";
 import { AuthPage } from "@/components/authPage";
-import { PageProps, UserData } from "../page";
-
+import { PageProps } from "../page";
 import { useRouter } from "next/navigation";
 
 export default function Sell({ data }: PageProps) {
+  const router = useRouter();
   return (
     <AuthPage>
       <div className={styles.sellContainer}>
@@ -19,7 +19,6 @@ export default function Sell({ data }: PageProps) {
           onClick={async (params) => {
             await sellStock(params);
             // Use client-side redirect after the sell action
-            const router = useRouter();
             router.push("/"); // Navigate to home page
           }}
         />
