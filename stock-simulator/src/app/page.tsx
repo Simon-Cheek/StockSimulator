@@ -35,7 +35,7 @@ export default async function HomePage() {
   }
 
   const data = await res.json();
-  const userData: UserData = data.userData;
+  const userData: UserData = JSON.parse(data.userData || "{}");
   console.log("UserData: ", userData);
 
   return <Home data={userData} />;

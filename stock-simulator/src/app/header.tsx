@@ -7,6 +7,7 @@ import { PageProps } from "./page";
 
 export default function Header({ data }: PageProps) {
   const stockInfo = data;
+  console.log(data);
 
   return (
     <div className={styles.bannerContainer}>

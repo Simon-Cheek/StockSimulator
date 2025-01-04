@@ -23,7 +23,7 @@ export default async function BuyPage() {
   }
 
   const data = await res.json();
-  const userData: UserData = data.userData;
+  const userData: UserData = JSON.parse(data.userData || "{}");
 
   return <Buy data={userData} userID={userID} />;
 }

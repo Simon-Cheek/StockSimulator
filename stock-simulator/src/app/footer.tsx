@@ -6,9 +6,10 @@ import { PageProps } from "./page";
 export default function Footer({ data }: PageProps) {
   const stockInfo = data;
 
-  const listOfStocks = stockInfo
-    ? Object.entries(stockInfo.stocks).map(([k, v]) => `${k} (${v})`)
-    : [];
+  const listOfStocks =
+    stockInfo && stockInfo?.stocks
+      ? Object.entries(stockInfo.stocks).map(([k, v]) => `${k} (${v})`)
+      : [];
 
   return (
     <div className={styles.stockListContainer}>
