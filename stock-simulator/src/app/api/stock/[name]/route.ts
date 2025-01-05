@@ -19,8 +19,6 @@ export async function GET(
   const stockURL = `https://finnhub.io/api/v1/quote?symbol=${name.toUpperCase()}&token=${
     process.env.STOCK_API_KEY
   }`;
-  console.log("GET Request to API with given URL for API call: ");
-  console.log(stockURL);
 
   const errorResponse = NextResponse.json(
     { message: "Error fetching data" },

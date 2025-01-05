@@ -58,12 +58,11 @@ export async function buyStock({
       },
       body: JSON.stringify({ userData: newUserInfo }),
     });
-    console.log("POSTRES: ", postRes);
     if (!postRes.ok) {
       throw Error(`Invalid post request: ${postRes}`);
     }
   } catch (e) {
-    console.log("POST ERROR: ", e);
-    alert(e);
+    console.log(e);
+    alert("Unable to buy stock");
   }
 }

@@ -17,7 +17,7 @@ export interface ExchangeProps extends PageProps {
 export default function Buy({ data, userID }: ExchangeProps) {
   const router = useRouter();
   return (
-    <AuthPage>
+    <>
       <Header data={data} />
       <div className={styles.buyContainer}>
         <InputForm
@@ -33,6 +33,6 @@ export default function Buy({ data, userID }: ExchangeProps) {
         </Paragraph>
       </div>
       <Footer data={data} />
-    </AuthPage>
+    </>
   );
 }

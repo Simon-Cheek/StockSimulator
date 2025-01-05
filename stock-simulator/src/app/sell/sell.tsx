@@ -13,7 +13,7 @@ import { ExchangeProps } from "../buy/buy";
 export default function Sell({ data, userID }: ExchangeProps) {
   const router = useRouter();
   return (
-    <AuthPage>
+    <>
       <Header data={data} />
       <div className={styles.sellContainer}>
         <InputForm
@@ -29,6 +29,6 @@ export default function Sell({ data, userID }: ExchangeProps) {
         </Paragraph>
       </div>
       <Footer data={data} />
-    </AuthPage>
+    </>
   );
 }

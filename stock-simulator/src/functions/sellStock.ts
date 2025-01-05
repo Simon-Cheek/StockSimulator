@@ -59,6 +59,7 @@ export async function sellStock({
       throw Error(`Invalid post request: ${postRes}`);
     }
   } catch (e) {
-    alert(e);
+    console.log(e);
+    alert("Unable to buy stock");
   }
 }

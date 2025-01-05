@@ -9,7 +9,7 @@ import Header from "./header";
 
 export default function Home({ data }: PageProps) {
   return (
-    <AuthPage>
+    <>
       <Header data={data} />
       <div className={styles.menuContainer}>
         <Button href="/buy">Buy Stock</Button>
@@ -17,6 +17,6 @@ export default function Home({ data }: PageProps) {
         <Button href="/sell">Sell Stock</Button>
       </div>
       <Footer data={data} />
-    </AuthPage>
+    </>
   );
 }
