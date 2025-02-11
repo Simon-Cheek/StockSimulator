@@ -19,7 +19,7 @@ export async function buyStock({
     if (price === undefined || price === null) {
       throw Error(`Unable to Retrieve Stock Name = ${name}.`);
     }
-    const res = await fetch(`https://stock.simoncheek.com/api/user/${userID}`);
+    const res = await fetch(`https://stock.simoncheek.com/api/users/${userID}`);
     if (!res.ok) {
       throw Error("Invalid User");
     }
@@ -51,7 +51,7 @@ export async function buyStock({
 
     // Save Information in DB
     const newUserInfo = { ...userData, balance };
-    const postRes = await fetch(`/api/user/${userID}`, {
+    const postRes = await fetch(`/api/users/${userID}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
