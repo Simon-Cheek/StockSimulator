@@ -23,7 +23,7 @@ export default async function HomePage() {
     return redirect("/login");
   }
 
-  const res = await fetch(`https://stock.simoncheek.com/api/user/${userID}`, {
+  const res = await fetch(`https://stock.simoncheek.com/api/users/${userID}`, {
     headers: {
       Cookie: `stockSimKey=${apiKey}`,
     },

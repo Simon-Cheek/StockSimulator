@@ -20,7 +20,7 @@ export async function retrievePrice(name: string): Promise<number | null> {
       }
     }
     // Cache does not exist for stock - cold miss
-    const url = `/api/stock/${name}`;
+    const url = `/api/stocks/${name}`;
     const res = await fetch(url);
     if (!res.ok) {
       throw Error(`Error retrieving data for Stock: ${name}`);

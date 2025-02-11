@@ -14,7 +14,7 @@ export function AuthPage({ children }: AuthProps) {
         window.location.href = "/login";
         return;
       }
-      const res = await fetch(`/api/user/${userID}`);
+      const res = await fetch(`/api/users/${userID}`);
       if (!res.ok) {
         window.location.href = "/login";
       }
