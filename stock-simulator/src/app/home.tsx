@@ -3,9 +3,9 @@ import styles from "./home.module.css";
 import { Button } from "@/components/button";
 import { Separator } from "@/components/separator";
 import Footer from "./footer";
-import { AuthPage } from "@/components/authPage";
 import { PageProps } from "./page";
 import Header from "./header";
+import { LogoutButton } from "@/components/logoutButton";
 
 export default function Home({ data }: PageProps) {
   return (
@@ -15,6 +15,8 @@ export default function Home({ data }: PageProps) {
         <Button href="/buy">Buy Stock</Button>
         <Separator vertical size="xs" />
         <Button href="/sell">Sell Stock</Button>
+        <Separator vertical size="xs" />
+        <LogoutButton />
       </div>
       <Footer data={data} />
     </>

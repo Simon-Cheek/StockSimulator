@@ -17,7 +17,6 @@ export default async function HomePage() {
   const cookieStore = await cookies();
   const user = cookieStore.get("stockSimUser");
   const apiKey = cookieStore.get("stockSimKey")?.value;
-  console.log("USer from cookie: ", user);
   const userID = user?.value;
 
   if (!userID) {

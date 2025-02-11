@@ -3,7 +3,7 @@ export async function register(userID: string, password: string) {
     if (!password || !userID) throw Error("User Info is required!");
     const dto = { password: password };
     const res = await fetch(`/api/user/${userID}`, {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },

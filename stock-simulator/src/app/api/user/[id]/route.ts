@@ -25,7 +25,6 @@ export async function GET(
   }
 
   const cookies = cookie.parse(req.headers.get("cookie") || "");
-  console.log("Cookies: ", cookies);
   const apiKey = cookies?.stockSimKey || "";
 
   try {
@@ -44,64 +43,8 @@ export async function GET(
   }
 }
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const id = (await params).id;
-
-  // Parse the request body to get the fields to update
-  const { userData } = await req.json();
-
-  if (!id || !userData) {
-    return NextResponse.json(
-      { error: "ID and Data are required" },
-      { status: 400 }
-    );
-  }
-
-  const updateParams: UpdateItemCommandInput = {
-    TableName: process.env.TABLE_NAME,
-    Key: {
-      userID: { S: id },
-    },
-    UpdateExpression: "set #data = :data",
-    ExpressionAttributeNames: {
-      "#data": "userData",
-    },
-    ExpressionAttributeValues: {
-      ":data": { S: JSON.stringify(userData) || "" },
-    },
-    ReturnValues: ReturnValue.ALL_NEW,
-  };
-
-  try {
-    // Authenticate
-    const cookies = cookie.parse(req.headers.get("cookie") || "");
-    const apiKey = cookies?.stockSimKey || "";
-    const user = await authenticateUser(id, apiKey);
-    if (!user) {
-      return NextResponse.json({ Message: "Unauthorized" }, { status: 401 });
-    }
-    // Send the UpdateItem request to DynamoDB
-    const command = new UpdateItemCommand(updateParams);
-    const data = await dynamoClient.send(command);
-
-    return NextResponse.json({
-      message: "Item updated successfully",
-      updatedItem: data.Attributes,
-    });
-  } catch (error) {
-    console.error("DynamoDB error:", error);
-    return NextResponse.json(
-      { error: "Failed to update item" },
-      { status: 500 }
-    );
-  }
-}
-
 // Endpoint for registering a user
-export async function PUT(
+export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -156,6 +99,62 @@ export async function PUT(
     console.error("DynamoDB error:", error);
     return NextResponse.json(
       { error: "Failed to create user" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const id = (await params).id;
+
+  // Parse the request body to get the fields to update
+  const { userData } = await req.json();
+
+  if (!id || !userData) {
+    return NextResponse.json(
+      { error: "ID and Data are required" },
+      { status: 400 }
+    );
+  }
+
+  const updateParams: UpdateItemCommandInput = {
+    TableName: process.env.TABLE_NAME,
+    Key: {
+      userID: { S: id },
+    },
+    UpdateExpression: "set #data = :data",
+    ExpressionAttributeNames: {
+      "#data": "userData",
+    },
+    ExpressionAttributeValues: {
+      ":data": { S: JSON.stringify(userData) || "" },
+    },
+    ReturnValues: ReturnValue.ALL_NEW,
+  };
+
+  try {
+    // Authenticate
+    const cookies = cookie.parse(req.headers.get("cookie") || "");
+    const apiKey = cookies?.stockSimKey || "";
+    const user = await authenticateUser(id, apiKey);
+    if (!user) {
+      return NextResponse.json({ Message: "Unauthorized" }, { status: 401 });
+    }
+    // Send the UpdateItem request to DynamoDB
+    const command = new UpdateItemCommand(updateParams);
+    const data = await dynamoClient.send(command);
+
+    return NextResponse.json({
+      message: "Item updated successfully",
+      updatedItem: data.Attributes,
+    });
+  } catch (error) {
+    console.error("DynamoDB error:", error);
+    return NextResponse.json(
+      { error: "Failed to update item" },
       { status: 500 }
     );
   }

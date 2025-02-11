@@ -9,6 +9,7 @@ import Footer from "../footer";
 import { AuthPage } from "@/components/authPage";
 import { PageProps } from "../page";
 import Header from "../header";
+import { LogoutButton } from "@/components/logoutButton";
 
 export interface ExchangeProps extends PageProps {
   userID: string;
