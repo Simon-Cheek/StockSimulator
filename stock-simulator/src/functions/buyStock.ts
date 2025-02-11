@@ -52,7 +52,7 @@ export async function buyStock({
     // Save Information in DB
     const newUserInfo = { ...userData, balance };
     const postRes = await fetch(`/api/user/${userID}`, {
-      method: "POST",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
