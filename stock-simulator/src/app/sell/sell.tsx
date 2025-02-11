@@ -5,7 +5,6 @@ import { Separator } from "@/components/separator";
 import styles from "./sell.module.css";
 import { sellStock } from "@/functions/sellStock";
 import Footer from "../footer";
-import { AuthPage } from "@/components/authPage";
 import { useRouter } from "next/navigation";
 import Header from "../header";
 import { ExchangeProps } from "../buy/buy";
