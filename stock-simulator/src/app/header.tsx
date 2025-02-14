@@ -16,7 +16,7 @@ export default function Header({ data }: PageProps | { data: null }) {
         <H3>
           Current Value:
           <Span color={colors.blue}>
-            {stockInfo ? ` $${stockInfo.balance}` : " $0"}
+            {stockInfo?.balance ? ` $${stockInfo.balance}` : " $0"}
           </Span>
         </H3>
       </div>

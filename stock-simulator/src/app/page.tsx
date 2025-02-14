@@ -20,7 +20,7 @@ export default async function HomePage() {
   const userID = user?.value;
 
   if (!userID) {
-    return redirect("/login");
+    // return redirect("/login");
   }
 
   const res = await fetch(`https://stock.simoncheek.com/api/users/${userID}`, {
@@ -29,7 +29,7 @@ export default async function HomePage() {
     },
   });
   if (!res.ok) {
-    return redirect("/login");
+    // return redirect("/login");
   }
 
   const data = await res.json();

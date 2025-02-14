@@ -37,7 +37,21 @@
 
 .menuContainer {
   width: 100%;
-  margin: 40px 0;
+  margin: 40px 0px;
   display: flex;
   justify-content: center;
+}
+
+/* MOBILE */
+@media (max-width: 450px) {
+  .menuContainer {
+    margin: 0px;
+    margin-bottom: 50px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .menuContainer button {
+    margin: 8px 0;
+  }
 }
