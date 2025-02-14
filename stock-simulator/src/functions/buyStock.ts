@@ -14,8 +14,12 @@ export async function buyStock({
   // Make sure amount isn't a decimal
   const numAmount = Math.floor(parseFloat(amount));
 
-  // Make sure price is returned from API
+  // Make sure price is returned from API and amount is valid
   try {
+    if (Number.isNaN(numAmount)) {
+      throw Error("Invalid stock amount");
+    }
+
     if (price === undefined || price === null) {
       throw Error(`Unable to Retrieve Stock Name = ${name}.`);
     }
@@ -29,7 +33,7 @@ export async function buyStock({
     const stocks = userData.stocks;
 
     // Make sure user can afford to buy the given stock
-    const totalPrice = parseFloat((price * numAmount).toFixed(2));
+    const totalPrice: number = parseFloat((price * numAmount).toFixed(2));
     if (totalPrice > balance) {
       throw Error(`User cannot afford ${numAmount} shares of stock: ${name}!`);
     }
@@ -48,6 +52,7 @@ export async function buyStock({
 
     // Subtract total price from balance
     balance -= totalPrice;
+    balance = parseFloat(balance.toFixed(2));
 
     // Save Information in DB
     const newUserInfo = { ...userData, balance };

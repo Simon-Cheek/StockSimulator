@@ -14,8 +14,12 @@ export async function sellStock({
   // Make sure amount isn't a decimal
   const numAmount = Math.floor(parseFloat(amount));
 
-  // Make sure price is returned from API
+  // Make sure price is returned from API and amount to sell is valid
   try {
+    if (Number.isNaN(numAmount)) {
+      throw Error("Invalid stock amount");
+    }
+
     if (price === undefined || price === null) {
       throw Error(`Unable to Retrieve Stock Name = ${name}.`);
     }
@@ -45,6 +49,7 @@ export async function sellStock({
     // Calculate total value and add to user balance
     const totalValue = price * numAmount;
     balance += totalValue;
+    balance = parseFloat(balance.toFixed(2));
 
     // Save Information in DB
     const newUserInfo = { ...userData, balance };
